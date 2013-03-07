@@ -11,6 +11,11 @@
 
 #include <iostream>
 
+
+/** RangeDelWorker, to do the actual delete work
+  * extends from AsyncWorker in LevelDOWN, a lot of the dirty
+  * async work is handled there.
+  */
 RangeDelWorker::RangeDelWorker (
     leveldown::Database* database
   , v8::Persistent<v8::Function> callback
@@ -51,6 +56,7 @@ void RangeDelWorker::Execute () {
     , startPtr
   );
 
+  // these next lines are the actual range-delete operation
   std::string key;
   while (iterator->IteratorNext(key, key)) {
     database->DeleteFromDatabase(options, leveldb::Slice(key));
@@ -58,7 +64,11 @@ void RangeDelWorker::Execute () {
   iterator->IteratorEnd();
 }
 
-// copied mostly from LevelDOWN iterator.cc Iterator::New()
+/** The concrete implementation of the .rangeDel() method attached
+  * to a LevelDOWN instance.
+  * copied mostly from LevelDOWN iterator.cc Iterator::New()
+  * because the functionality is very similar to making a new iterator
+  */
 v8::Handle<v8::Value> NewRangeDel (const v8::Arguments& args) {
   v8::HandleScope scope;
 
@@ -113,7 +123,10 @@ v8::Handle<v8::Value> NewRangeDel (const v8::Arguments& args) {
   return v8::Undefined();
 }
 
-
+/** Our plugin that extends from the base Plugin class in LevelDOWN.
+  * We just need a Name(), and an Init() that is run each time new LevelDOWN
+  * instance is created.
+  */
 class RangedelPlugin : public leveldown::Plugin {
 public:
   RangedelPlugin () {}
@@ -123,6 +136,8 @@ public:
   }
 
   void Init (v8::Local<v8::Object> database) {
+    // given a LevelDOWN instance, attach a .rangeDel() method to it
+    // using the implementation above
     database->Set(
         v8::String::NewSymbol("rangeDel")
       , v8::FunctionTemplate::New(NewRangeDel)->GetFunction()
