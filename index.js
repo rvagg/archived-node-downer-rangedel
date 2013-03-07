@@ -1,8 +1,6 @@
-var path      = require('path')
-  , used      = false
-
+var used      = false
 // path to the native module
-module.exports.location = path.join(__dirname, '/build/Release/rangedel.node')
+module.exports.location = require('bindings')({ path: true, bindings: 'rangedel' })
 // register the plugin
 module.exports.use = function () {
   if (used) return
