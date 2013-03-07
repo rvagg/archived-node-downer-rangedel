@@ -1,0 +1,29 @@
+{
+    "name"            : "downer-rangedel"
+  , "description"     : "A native LevelDOWN plugin providing a rangeDel() method"
+  , "version"         : "0.0.0"
+  , "homepage"        : "https://github.com/rvagg/node-downer-rangedel"
+  , "authors"         : [
+        "Rod Vagg <rod@vagg.org> (https://github.com/rvagg)"
+    ]
+  , "keywords"        : [ "leveldown", "leveldb", "rangedel" ]
+  , "main"            : "./index.js"
+  , "repository"      : {
+        "type"            : "git"
+      , "url"             : "https://github.com/rvagg/node-downer-rangedel.git"
+    }
+  , "dependencies"    : {}
+  , "devDependencies" : {
+        "leveldown"       : "~0.2.0-b00"
+      , "tap"             : "*"
+      , "rimraf"          : "*"
+    }
+  , "peerDependencies" : {
+        "leveldown"       : "~0.2.0-b00"
+    }
+  , "scripts": {
+        "test"            : "node ./test.js"
+    }
+  , "license"             : "MIT"
+  , "gypfile"             : true
+}
