@@ -14,12 +14,12 @@
     }
   , "dependencies"    : {}
   , "devDependencies" : {
-        "leveldown"       : "~0.2.0-b01"
+        "leveldown"       : "~0.2.0-b02"
       , "tap"             : "*"
       , "rimraf"          : "*"
     }
   , "peerDependencies" : {
-        "leveldown"       : "~0.2.0-b01"
+        "leveldown"       : "~0.2.0-b02"
     }
   , "scripts": {
         "test"            : "node ./test.js"
